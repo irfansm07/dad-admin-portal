@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "src": "/saida.jpg",
+    "captionTe": "ఎస్.ఎం. సైదా – ప్రజల నేత",
+    "captionEn": "S.M. SAIDA – People's Leader",
+    "tagTe": "వ్యక్తిత్వం",
+    "tagEn": "Portrait"
+  },
+  {
+    "id": 2,
+    "src": "/work6.jpg",
+    "captionTe": "ఇంట్లో సలహా సమావేశం – ప్రణాళికలు & చర్చలు",
+    "captionEn": "In-House Advisory Meetup – Planning & Discussions",
+    "tagTe": "సమావేశం",
+    "tagEn": "Advisory"
+  },
+  {
+    "id": 3,
+    "src": "/work7.jpg",
+    "captionTe": "గౌరవనీయులైన ఎంపీ గారితో సమస్యల చర్చ",
+    "captionEn": "Problem Discussion with Honorable MP Sir",
+    "tagTe": "చర్చలు",
+    "tagEn": "MP Meeting"
+  },
+  {
+    "id": 4,
+    "src": "/work8.png",
+    "captionTe": "రాత్రి ర్యాలీ – ప్రజల మద్దతు",
+    "captionEn": "Night Rally – Public Support",
+    "tagTe": "ర్యాలీ",
+    "tagEn": "Rally"
+  },
+  {
+    "id": 5,
+    "src": "/work9.jpg",
+    "captionTe": "రాత్రి వేళల్లో ప్రజల సమస్యల పరిశీలన",
+    "captionEn": "Knowing People's Problems at Night",
+    "tagTe": "సేవ",
+    "tagEn": "Night Visit"
+  },
+  {
+    "id": 6,
+    "src": "/work10.jpg",
+    "captionTe": "సమావేశానికి ప్రయాణంలో...",
+    "captionEn": "On a Travel to Meeting...",
+    "tagTe": "ప్రయాణం",
+    "tagEn": "Travel"
+  },
+  {
+    "id": 7,
+    "src": "/work3.png",
+    "captionTe": "అధికారిక సమావేశం – నేత హుందాతనం",
+    "captionEn": "Formal Event – Leader's Dignity",
+    "tagTe": "అధికారిక",
+    "tagEn": "Official"
+  },
+  {
+    "id": 8,
+    "src": "/work5.jpg",
+    "captionTe": "రాజకీయ నేతృత్వం – దృఢత & సంకల్పం",
+    "captionEn": "Political Leadership – Resolve & Strength",
+    "tagTe": "నేతృత్వం",
+    "tagEn": "Leadership"
+  },
+  {
+    "id": 9,
+    "src": "/work4.jpg",
+    "captionTe": "సాంస్కృతిక కార్యక్రమం – ప్రజలతో",
+    "captionEn": "Cultural Celebration – With the People",
+    "tagTe": "సాంస్కృతిక",
+    "tagEn": "Cultural"
+  },
+  {
+    "id": 10,
+    "src": "/work2.jpg",
+    "captionTe": "సమాజ సభలో ప్రసంగం – ఐక్యత సందేశం",
+    "captionEn": "Addressing Gathering – Unity Message",
+    "tagTe": "ప్రజా సభ",
+    "tagEn": "Public Address"
+  },
+  {
+    "id": 11,
+    "src": "/work1.png",
+    "captionTe": "సమాజంతో ముఖాముఖి – రాత్రి సమావేశం",
+    "captionEn": "Community Embrace – Night Event",
+    "tagTe": "సమాజ సంబంధం",
+    "tagEn": "Community"
+  }
+]
