@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = `http://${window.location.hostname}:5000/api`;
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -396,7 +396,7 @@ export default function App() {
                         {/* Image Preview Block */}
                         <div style={{ height:140, background:'#020810', position:'relative', display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden' }}>
                           {slot.src ? (
-                            <img src={`http://localhost:5174${slot.src}`} alt="Preview" style={{ width:'100%', height:'100%', objectFit:'cover' }} onError={e => {
+                            <img src={`http://${window.location.hostname}:5174${slot.src}`} alt="Preview" style={{ width:'100%', height:'100%', objectFit:'cover' }} onError={e => {
                               // Fallback if Vite dev server host varies
                               e.target.src = slot.src;
                             }} />

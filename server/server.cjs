@@ -10,6 +10,12 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`[API Request] ${req.method} ${req.url} - IP: ${req.ip}`);
+  next();
+});
+
 // Paths to databases
 const DB_FILE = path.join(__dirname, 'db.json');
 const PHOTOS_FILE = path.join(__dirname, 'photos.json');
