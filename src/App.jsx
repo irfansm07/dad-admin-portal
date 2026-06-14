@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-const API_BASE = `http://${window.location.hostname}:5000/api`;
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? `http://${window.location.hostname}:5000/api`
+  : 'https://dad-admin-portal.onrender.com/api';
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -164,14 +166,16 @@ export default function App() {
     const matchesSearch = a.fullName.toLowerCase().includes(search.toLowerCase()) ||
                           a.village.toLowerCase().includes(search.toLowerCase()) ||
                           a.roleName.toLowerCase().includes(search.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || a.status === statusFilter;
+    const status = a.status === 'approved' ? 'appointed' : a.status;
+    const matchesStatus = statusFilter === 'all' || status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
   // Calculate statistics
   const totalApps = applications.length;
   const pendingApps = applications.filter(a => a.status === 'pending').length;
-  const approvedApps = applications.filter(a => a.status === 'approved').length;
+  const approvedApps = applications.filter(a => a.status === 'appointed' || a.status === 'approved').length;
+  const firedApps = applications.filter(a => a.status === 'fired').length;
   const activePhotosCount = photos.filter(p => p.src).length;
 
   if (!authenticated) {
@@ -278,7 +282,8 @@ export default function App() {
                   {[
                     { title:'Total Applications', val:totalApps, bg:'rgba(255,255,255,0.02)', icon:'📥', color:'#E8E0D0' },
                     { title:'Pending Review', val:pendingApps, bg:'rgba(201,168,76,0.05)', icon:'⏳', color:'#C9A84C', border:'1px solid rgba(201,168,76,0.3)' },
-                    { title:'Approved Nominees', val:approvedApps, bg:'rgba(46,125,50,0.06)', icon:'✅', color:'#2E7D32', border:'1px solid rgba(46,125,50,0.3)' },
+                    { title:'Appointed Members', val:approvedApps, bg:'rgba(46,125,50,0.06)', icon:'✅', color:'#2E7D32', border:'1px solid rgba(46,125,50,0.3)' },
+                    { title:'Fired Members', val:firedApps, bg:'rgba(198,40,40,0.06)', icon:'❌', color:'#E57373', border:'1px solid rgba(198,40,40,0.3)' },
                     { title:'Photos Active', val:`${activePhotosCount} / 11`, bg:'rgba(255,255,255,0.02)', icon:'🖼️', color:'#E8E0D0' }
                   ].map((s,i) => (
                     <div key={i} style={{ 
@@ -312,7 +317,7 @@ export default function App() {
                   
                   {/* Status Pills */}
                   <div style={{ display:'flex', gap:6, background:'rgba(255,255,255,0.03)', padding:4, borderRadius:30, border:'1px solid rgba(255,255,255,0.08)' }}>
-                    {['all', 'pending', 'approved', 'rejected'].map(st => (
+                    {['all', 'pending', 'appointed', 'rejected', 'fired'].map(st => (
                       <button key={st} onClick={() => setStatusFilter(st)} style={{
                         background:statusFilter === st ? '#C9A84C' : 'transparent',
                         color:statusFilter === st ? '#0A1628' : 'rgba(232,224,208,0.6)',
@@ -361,12 +366,18 @@ export default function App() {
                         
                         {/* Status Label */}
                         <div style={{
-                          background: app.status==='approved'?'rgba(46,125,50,0.15)':app.status==='rejected'?'rgba(198,40,40,0.15)':'rgba(201,168,76,0.15)',
-                          border: app.status==='approved'?'1px solid #2E7D32':app.status==='rejected'?'1px solid #C62828':'1px solid #C9A84C',
-                          color: app.status==='approved'?'#81C784':app.status==='rejected'?'#E57373':'#FFD54F',
+                          background: (app.status==='appointed' || app.status==='approved') ? 'rgba(46,125,50,0.15)' : 
+                                      app.status==='rejected' ? 'rgba(198,40,40,0.15)' : 
+                                      app.status==='fired' ? 'rgba(230,81,0,0.15)' : 'rgba(201,168,76,0.15)',
+                          border: (app.status==='appointed' || app.status==='approved') ? '1px solid #2E7D32' : 
+                                  app.status==='rejected' ? '1px solid #C62828' : 
+                                  app.status==='fired' ? '1px solid #E65100' : '1px solid #C9A84C',
+                          color: (app.status==='appointed' || app.status==='approved') ? '#81C784' : 
+                                 app.status==='rejected' ? '#E57373' : 
+                                 app.status==='fired' ? '#FFB74D' : '#FFD54F',
                           borderRadius:20, padding:'4px 12px', fontFamily:'Inter', fontSize:10, fontWeight:700, textTransform:'uppercase', letterSpacing:'0.04em'
                         }}>
-                          {app.status}
+                          {app.status === 'approved' ? 'appointed' : app.status}
                         </div>
                       </div>
                     ))}
@@ -396,7 +407,7 @@ export default function App() {
                         {/* Image Preview Block */}
                         <div style={{ height:140, background:'#020810', position:'relative', display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden' }}>
                           {slot.src ? (
-                            <img src={`http://${window.location.hostname}:5174${slot.src}`} alt="Preview" style={{ width:'100%', height:'100%', objectFit:'cover' }} onError={e => {
+                            <img src={slot.src.startsWith('http') ? slot.src : `http://${window.location.hostname}:5000${slot.src}`} alt="Preview" style={{ width:'100%', height:'100%', objectFit:'cover' }} onError={e => {
                               // Fallback if Vite dev server host varies
                               e.target.src = slot.src;
                             }} />
@@ -550,23 +561,61 @@ export default function App() {
 
             {/* Action buttons */}
             <div style={{ display:'flex', gap:14, marginTop:36 }}>
-              <button onClick={() => handleStatusChange(selectedApp.id, 'rejected')} style={{
-                flex:1, padding:14, borderRadius:50, border:'1px solid rgba(198,40,40,0.5)',
-                background:selectedApp.status==='rejected'?'#C62828':'rgba(198,40,40,0.1)',
-                color:selectedApp.status==='rejected'?'#fff':'#E57373',
-                fontFamily:'Inter', fontSize:14, fontWeight:700, cursor:'pointer', transition:'all 0.2s'
-              }}>
-                Reject Nomination
-              </button>
-              <button onClick={() => handleStatusChange(selectedApp.id, 'approved')} style={{
-                flex:1, padding:14, borderRadius:50, border:'none',
-                background:selectedApp.status==='approved'?'#2E7D32':'linear-gradient(135deg,#C9A84C,#E4C97A)',
-                color:selectedApp.status==='approved'?'#fff':'#0A1628',
-                fontFamily:'Inter', fontSize:14, fontWeight:800, cursor:'pointer', transition:'all 0.2s',
-                boxShadow:'0 4px 14px rgba(0,0,0,0.2)'
-              }}>
-                {selectedApp.status === 'approved' ? 'Nomination Approved ✓' : 'Approve Nominee'}
-              </button>
+              {(selectedApp.status === 'appointed' || selectedApp.status === 'approved') ? (
+                <>
+                  <button onClick={() => handleStatusChange(selectedApp.id, 'fired')} style={{
+                    flex:1, padding:14, borderRadius:50, border:'1px solid rgba(198,40,40,0.5)',
+                    background:'rgba(198,40,40,0.1)', color:'#E57373',
+                    fontFamily:'Inter', fontSize:14, fontWeight:700, cursor:'pointer', transition:'all 0.2s'
+                  }}>
+                    Fire Member ❌
+                  </button>
+                  <button disabled style={{
+                    flex:1, padding:14, borderRadius:50, border:'none',
+                    background:'#2E7D32', color:'#fff',
+                    fontFamily:'Inter', fontSize:14, fontWeight:800, transition:'all 0.2s'
+                  }}>
+                    Appointed ✓
+                  </button>
+                </>
+              ) : selectedApp.status === 'fired' ? (
+                <>
+                  <button disabled style={{
+                    flex:1, padding:14, borderRadius:50, border:'1px solid rgba(198,40,40,0.5)',
+                    background:'#C62828', color:'#fff',
+                    fontFamily:'Inter', fontSize:14, fontWeight:700
+                  }}>
+                    Fired ✓
+                  </button>
+                  <button onClick={() => handleStatusChange(selectedApp.id, 'appointed')} style={{
+                    flex:1, padding:14, borderRadius:50, border:'none',
+                    background:'linear-gradient(135deg,#C9A84C,#E4C97A)', color:'#0A1628',
+                    fontFamily:'Inter', fontSize:14, fontWeight:800, cursor:'pointer', transition:'all 0.2s',
+                    boxShadow:'0 4px 14px rgba(0,0,0,0.2)'
+                  }}>
+                    Re-Appoint Member
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => handleStatusChange(selectedApp.id, 'rejected')} style={{
+                    flex:1, padding:14, borderRadius:50, border:'1px solid rgba(198,40,40,0.5)',
+                    background:selectedApp.status==='rejected'?'#C62828':'rgba(198,40,40,0.1)',
+                    color:selectedApp.status==='rejected'?'#fff':'#E57373',
+                    fontFamily:'Inter', fontSize:14, fontWeight:700, cursor:'pointer', transition:'all 0.2s'
+                  }}>
+                    {selectedApp.status === 'rejected' ? 'Rejected ✓' : 'Reject Nomination'}
+                  </button>
+                  <button onClick={() => handleStatusChange(selectedApp.id, 'appointed')} style={{
+                    flex:1, padding:14, borderRadius:50, border:'none',
+                    background:'linear-gradient(135deg,#C9A84C,#E4C97A)', color:'#0A1628',
+                    fontFamily:'Inter', fontSize:14, fontWeight:800, cursor:'pointer', transition:'all 0.2s',
+                    boxShadow:'0 4px 14px rgba(0,0,0,0.2)'
+                  }}>
+                    Appoint Member
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
