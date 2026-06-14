@@ -1012,6 +1012,41 @@ export default function App() {
                   <span>✓</span> Nominee confirmed 24/7 availability when called.
                 </div>
               )}
+
+              {/* Aadhaar Documents Section */}
+              {(selectedApp.aadharFront || selectedApp.aadharBack) && (
+                <div style={{ marginTop: 16 }}>
+                  <span style={{ fontSize: 10, color: '#C9A84C', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 12 }}>
+                    Uploaded Documents (Aadhaar Card)
+                  </span>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                    {selectedApp.aadharFront && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        <span style={{ fontSize: 11, color: 'rgba(232,224,208,0.55)' }}>Front Side</span>
+                        <a href={selectedApp.aadharFront} target="_blank" rel="noopener noreferrer" style={{ borderRadius: 10, border: '1.5px solid rgba(201,168,76,0.25)', overflow: 'hidden', display: 'block', height: 110, background: '#020810', position: 'relative' }}>
+                          <img src={selectedApp.aadharFront} alt="Aadhaar Front" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,22,40,0.4)', opacity: 0, transition: 'opacity 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 12, fontWeight: 600 }}
+                            onMouseEnter={e => e.currentTarget.style.opacity = 1}
+                            onMouseLeave={e => e.currentTarget.style.opacity = 0}
+                          >🔍 View Full</div>
+                        </a>
+                      </div>
+                    )}
+                    {selectedApp.aadharBack && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        <span style={{ fontSize: 11, color: 'rgba(232,224,208,0.55)' }}>Back Side</span>
+                        <a href={selectedApp.aadharBack} target="_blank" rel="noopener noreferrer" style={{ borderRadius: 10, border: '1.5px solid rgba(201,168,76,0.25)', overflow: 'hidden', display: 'block', height: 110, background: '#020810', position: 'relative' }}>
+                          <img src={selectedApp.aadharBack} alt="Aadhaar Back" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <div style={{ position: 'absolute', inset: 0, background: 'rgba(10,22,40,0.4)', opacity: 0, transition: 'opacity 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 12, fontWeight: 600 }}
+                            onMouseEnter={e => e.currentTarget.style.opacity = 1}
+                            onMouseLeave={e => e.currentTarget.style.opacity = 0}
+                          >🔍 View Full</div>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Action Buttons */}
