@@ -1,5 +1,5 @@
 -- ============================================================
--- S.M. Saida Political Website – Supabase Database Setup
+-- S.M. Shaida Political Website – Supabase Database Setup
 -- Run this SQL in: Supabase Dashboard > SQL Editor > New Query
 -- ============================================================
 

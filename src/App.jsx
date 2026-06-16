@@ -378,7 +378,7 @@ export default function App() {
             animation: 'pulse 2.5s ease infinite'
           }}>⚜</div>
           <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 26, color: '#C9A84C', fontWeight: 900, margin: '0 0 6px' }}>
-            S.M. SAIDA
+            S.M. SHAIDA
           </h2>
           <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(232,224,208,0.4)', textTransform: 'uppercase', letterSpacing: '0.12em', margin: '0 0 40px' }}>
             Campaign Admin Portal
@@ -467,7 +467,7 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 20, color: '#C9A84C' }}>⚜</span>
           <span style={{ fontFamily: 'Playfair Display, serif', fontSize: 18, fontWeight: 900, color: '#C9A84C', letterSpacing: '0.05em' }}>
-            SAIDA ADMIN
+            SHAIDA ADMIN
           </span>
         </div>
 
@@ -561,7 +561,7 @@ export default function App() {
                   borderRadius: 18, padding: 28, marginBottom: 28
                 }}>
                   <h3 style={{ fontFamily: 'Playfair Display, serif', fontSize: 20, color: '#C9A84C', margin: '0 0 10px' }}>
-                    Welcome to S.M. Saida's Campaign Admin Panel
+                    Welcome to S.M. Shaida's Campaign Admin Panel
                   </h3>
                   <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'rgba(232,224,208,0.65)', lineHeight: 1.7, margin: 0 }}>
                     Use the navigation below to switch views. You can review nominee applications, appoint or fire village representatives, 
