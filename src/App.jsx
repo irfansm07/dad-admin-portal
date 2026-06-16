@@ -978,6 +978,51 @@ export default function App() {
 
             {/* Details */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, fontFamily: 'Inter, sans-serif', fontSize: 14 }}>
+
+              {/* ── Application ID Highlight Box ── */}
+              {(selectedApp.tempId || selectedApp.id) && (
+                <div style={{
+                  background: 'linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.06))',
+                  border: '1.5px solid rgba(201,168,76,0.45)',
+                  borderRadius: 12,
+                  padding: '14px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 12,
+                  marginBottom: 4
+                }}>
+                  <div>
+                    <span style={{ fontSize: 9, color: '#C9A84C', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', display: 'block', marginBottom: 5 }}>🪪 Application ID</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 16, fontWeight: 900, color: '#FFD97D', letterSpacing: '0.06em' }}>
+                      {selectedApp.tempId || `APP-${String(selectedApp.id).padStart(6, '0')}`}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const idVal = selectedApp.tempId || `APP-${String(selectedApp.id).padStart(6, '0')}`;
+                      navigator.clipboard.writeText(idVal).then(() => alert(`✅ Application ID copied: ${idVal}`));
+                    }}
+                    title="Copy Application ID"
+                    style={{
+                      background: 'rgba(201,168,76,0.15)',
+                      border: '1px solid rgba(201,168,76,0.4)',
+                      borderRadius: 8,
+                      color: '#C9A84C',
+                      fontSize: 13,
+                      fontWeight: 700,
+                      padding: '7px 14px',
+                      cursor: 'pointer',
+                      fontFamily: 'Inter, sans-serif',
+                      whiteSpace: 'nowrap',
+                      transition: 'background 0.2s'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(201,168,76,0.28)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(201,168,76,0.15)'}
+                  >📋 Copy ID</button>
+                </div>
+              )}
+
               {[
                 { l: 'Age / Gender',         v: `${selectedApp.age} years / ${selectedApp.gender}` },
                 { l: 'Mobile Number',         v: selectedApp.mobile },
